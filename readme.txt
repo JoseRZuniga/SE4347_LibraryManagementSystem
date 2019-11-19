@@ -1,0 +1,3 @@
+A readme.txt file that describes how to compile, build, and install your application. It
+should include any technical dependencies (language, frameworks, platform, OS,
+software libraries, software versions, etc.).
