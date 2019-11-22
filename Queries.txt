@@ -3,7 +3,7 @@ Queries for Book Search and Availability
 ## If user only inputs ISBN
 SELECT book.ISBN, Title, Name AS Author, Availability
 From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
-WHERE book.ISBN = '' AND A.ISBN = ''
+WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
 AND A.author_ID = B.author_ID;
 
 
