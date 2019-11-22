@@ -16,7 +16,7 @@ AND book.ISBN = A.ISBN;
 
 
 ## If user only inputs Author
-SELECT book.ISBN, Title, name AS Author
+SELECT book.ISBN, Title, name AS Author, Availability
 From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
 WHERE name = 'William Abrahams'
 AND A.author_ID = B.author_ID
@@ -24,7 +24,7 @@ AND book.ISBN = A.ISBN;
 
 
 ## If user inputs ISBN, Title, and Author
-SELECT book.ISBN, Title, name AS Author
+SELECT book.ISBN, Title, name AS Author, Availability
 From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
 WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
   AND Title = 'Prize Stories 1987: The O. Henry Awards'
@@ -32,7 +32,7 @@ WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
 
 
   ## If user inputs ISBN and Title
-  SELECT book.ISBN, Title, name AS Author
+  SELECT book.ISBN, Title, name AS Author, Availability
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
     AND A.author_ID = B.author_ID
@@ -41,14 +41,14 @@ WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
 
 
   ## If user inputs ISBN and Author
-  SELECT book.ISBN, Title, name AS Author
+  SELECT book.ISBN, Title, name AS Author, Availability
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
     AND name = 'William Abrahams'
   ;
 
   ## If user inputs Title and Author
-  SELECT book.ISBN, Title, name AS Author
+  SELECT book.ISBN, Title, name AS Author, Availability
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE  name = 'William Abrahams'
   	AND Title = 'Prize Stories 1987: The O. Henry Awards'
