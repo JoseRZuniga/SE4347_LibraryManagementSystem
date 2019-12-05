@@ -1,51 +1,6 @@
 Queries for Book Search and Availability
 
 ## If user only inputs ISBN
-SELECT ISBN, Title, Author
-From SQL_Library.books
-WHERE ISBN = "";
-
-
-## If user only inputs Title
-SELECT ISBN, Title, Author
-FROM SQL_Library.books, SQL_Library.authors
-WHERE Title LIKE '%%';
-
-
-## If user only inputs Author
-SELECT ISBN, Title, Author
-FROM SQL_Library.books, SQL_Library.authors
-WHERE Author LIKE '%%';
-
-
-## If user inputs ISBN, Title, and Author
-SELECT ISBN, Title, Author
-FROM SQL_Library.books, SQL_Library.authors
-WHERE ISBN = ""
-  AND Title LIKE '%%'
-  AND Author LIKE '%%';
-
-
-## If user inputs ISBN and Title
-SELECT ISBN, Title, Author
-FROM SQL_Library.books, SQL_Library.authors
-WHERE ISBN = ""
-  AND Title LIKE '%%';
-
-
-## If user inputs ISBN and Author
-SELECT ISBN, Title, Author
-FROM SQL_Library.books, SQL_Library.authors
-WHERE ISBN = ""
-  AND Author LIKE '%%';
-
-## If user inputs Title and Author
-SELECT ISBN, Title, name
-FROM SQL_Library.books, SQL_Library.authors
-WHERE Title LIKE '%%'
-  AND name LIKE '%%';
-
-
 SELECT book.ISBN, Title, Name AS Author, Availability
 From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
 WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
@@ -109,4 +64,3 @@ AND name LIKE  '%William%'
 AND A.author_ID = B.author_ID
 AND book.ISBN = A.ISBN;
 ;
-
