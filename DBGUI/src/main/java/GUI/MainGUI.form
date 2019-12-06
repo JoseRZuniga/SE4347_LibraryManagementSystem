@@ -190,7 +190,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Search with any combination of ISBN, Book Title, Author(s) seperating each field with a tab"/>
+                <Property name="text" type="java.lang.String" value="Search with any combination of ISBN, Book Title, Author(s) seperating each field with a ~"/>
               </Properties>
             </Component>
           </SubComponents>
