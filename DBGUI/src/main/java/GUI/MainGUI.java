@@ -7,7 +7,14 @@ package GUI;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import java.io.*;
 /**
  *
  * @author alegAsus
@@ -31,7 +38,7 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         borrowertab = new javax.swing.JPanel();
         SSNTextField = new javax.swing.JTextField();
         FirstNameTextField = new javax.swing.JTextField();
@@ -42,12 +49,16 @@ public class MainGUI extends javax.swing.JFrame {
         SearchField = new javax.swing.JTextField();
         SearchButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         finestab = new javax.swing.JPanel();
         viewfinesbutton = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        checkouttab = new javax.swing.JPanel();
+        borrowerID = new javax.swing.JTextField();
+        isbncheckout = new javax.swing.JTextField();
+        CheckoutButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        checkinisbn = new javax.swing.JTextField();
+        checkingborrowernumber = new javax.swing.JTextField();
+        checkinbutton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,7 +92,7 @@ public class MainGUI extends javax.swing.JFrame {
                         .addComponent(FirstNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                         .addComponent(SSNTextField))
                     .addComponent(AddBorrowerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(584, Short.MAX_VALUE))
+                .addContainerGap(534, Short.MAX_VALUE))
         );
         borrowertabLayout.setVerticalGroup(
             borrowertabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,7 +110,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap(367, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Add Borrowers", borrowertab);
+        tabs.addTab("Add Borrowers", borrowertab);
 
         SearchField.setText("101010");
         SearchField.addActionListener(new java.awt.event.ActionListener() {
@@ -117,19 +128,6 @@ public class MainGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Search with any combination of ISBN, Book Title, Author(s) seperating each field with a tab");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
         javax.swing.GroupLayout lookuptabLayout = new javax.swing.GroupLayout(lookuptab);
         lookuptab.setLayout(lookuptabLayout);
         lookuptabLayout.setHorizontalGroup(
@@ -137,11 +135,10 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(lookuptabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(lookuptabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 777, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SearchButton)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         lookuptabLayout.setVerticalGroup(
             lookuptabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,11 +149,10 @@ public class MainGUI extends javax.swing.JFrame {
                 .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SearchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(438, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Book Lookup", lookuptab);
+        tabs.addTab("Book Lookup", lookuptab);
 
         viewfinesbutton.setText("View Fines Table");
         viewfinesbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -165,43 +161,111 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable2);
-
         javax.swing.GroupLayout finestabLayout = new javax.swing.GroupLayout(finestab);
         finestab.setLayout(finestabLayout);
         finestabLayout.setHorizontalGroup(
             finestabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(finestabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(finestabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(finestabLayout.createSequentialGroup()
-                        .addComponent(viewfinesbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(259, 259, 259)
+                .addComponent(viewfinesbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(314, Short.MAX_VALUE))
         );
         finestabLayout.setVerticalGroup(
             finestabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(finestabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(viewfinesbutton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(202, 202, 202)
+                .addComponent(viewfinesbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(254, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Fines", finestab);
+        tabs.addTab("Fines", finestab);
+
+        borrowerID.setText("Borrower Number");
+        borrowerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrowerIDActionPerformed(evt);
+            }
+        });
+
+        isbncheckout.setText("ISBN");
+
+        CheckoutButton.setText("Checkout");
+        CheckoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckoutButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout checkouttabLayout = new javax.swing.GroupLayout(checkouttab);
+        checkouttab.setLayout(checkouttabLayout);
+        checkouttabLayout.setHorizontalGroup(
+            checkouttabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkouttabLayout.createSequentialGroup()
+                .addGroup(checkouttabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(checkouttabLayout.createSequentialGroup()
+                        .addGap(279, 279, 279)
+                        .addComponent(CheckoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(checkouttabLayout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addGroup(checkouttabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(borrowerID, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isbncheckout, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(274, Short.MAX_VALUE))
+        );
+        checkouttabLayout.setVerticalGroup(
+            checkouttabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(checkouttabLayout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addComponent(borrowerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(isbncheckout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(CheckoutButton)
+                .addContainerGap(265, Short.MAX_VALUE))
+        );
+
+        tabs.addTab("Checkout", checkouttab);
+
+        checkinisbn.setText("ISBN");
+
+        checkingborrowernumber.setText("Borrower Number");
+
+        checkinbutton.setText("Checkin");
+        checkinbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkinbuttonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(checkinisbn)
+                            .addComponent(checkingborrowernumber, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(checkinbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(275, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(checkinisbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(checkingborrowernumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(checkinbutton)
+                .addContainerGap(277, Short.MAX_VALUE))
+        );
+
+        tabs.addTab("Checkin", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,7 +274,7 @@ public class MainGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(tabs)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -222,7 +286,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(tabs)
                 .addContainerGap())
         );
 
@@ -237,7 +301,9 @@ public class MainGUI extends javax.swing.JFrame {
     //!!!IMPORTANT!!!
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         String text = SearchField.getText(); //will throw exception if null
+        System.out.println("text captured:" + text);
         String connectorQuery = queryGeneration(text);
+        System.out.println("Query: " + connectorQuery);
         System.out.println(connectorQuery);
         try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -248,9 +314,22 @@ public class MainGUI extends javax.swing.JFrame {
             System.out.println("Going to execute query");
             
 			ResultSet rs = st.executeQuery(connectorQuery);
+			if(rs == null) {
+				System.out.println("Result set is null");
+			}
 			System.out.println("Query has been executed");
-			while (rs.next())
-				System.out.println(rs.getString(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + "  " + rs.getInt(4));
+			
+			//lookuptable.setModel(DbUtils.resultSetToTableModel(rs));
+			
+			// It creates and displays the table
+			javax.swing.JTable table = new javax.swing.JTable(buildTableModel(rs));
+			
+		    // Closes the Connection
+
+		    JOptionPane.showMessageDialog(null, new JScrollPane(table));
+			
+			//while (rs.next())
+				//System.out.println(rs.getString(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + "  " + rs.getInt(4));
 			
 			con.close();
 		} catch (Exception e) {
@@ -258,21 +337,125 @@ public class MainGUI extends javax.swing.JFrame {
                 }
 		
     }//GEN-LAST:event_SearchButtonActionPerformed
-    
+
+    public static DefaultTableModel buildTableModel(ResultSet rs)
+    	    throws SQLException {
+
+    	ResultSetMetaData metaData = rs.getMetaData();
+
+    	// names of columns
+    	Vector<String> columnNames = new Vector<String>();
+    	int columnCount = metaData.getColumnCount();
+    	for (int column = 1; column <= columnCount; column++) {
+    	    columnNames.add(metaData.getColumnName(column));
+    	}
+
+    	// data of the table
+    	Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+    	while (rs.next()) {
+    	    Vector<Object> vector = new Vector<Object>();
+    	    for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+    	        vector.add(rs.getObject(columnIndex));
+    	    }
+    	    data.add(vector);
+    	}
+
+    	return new DefaultTableModel(data, columnNames);
+
+    	}
     //!!!IMPORTANT!!!
     private void AddBorrowerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBorrowerButtonActionPerformed
-        // TODO add your handling code here:
+    	// TODO add your handling code here:
+        String ssn= SSNTextField.getText();
+        String fName= FirstNameTextField.getText();
+        String lName= LastNameTextField.getText();
+        String address= AddressTextField.getText();
+try{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbfinal?characterEncoding=latin1", "root", "#tabebuiA5");
+        Statement stmt = con.createStatement();
+
+        if(SSNTextField.getText().equals("") && FirstNameTextField.getText().equals("") && LastNameTextField.getText().equals("") && AddressTextField.getText().equals(""))
+        {
+                JOptionPane.showMessageDialog(null, "Error. Value must not be null. Try again.");
+        }
+
+
+        else{
+                ResultSet rs1 = stmt.executeQuery("select * from dbfinal.borrowers where SSN='"+ssn+"';");
+
+                if(rs1.next())
+                {
+                        JOptionPane.showMessageDialog(null, "The borrower already exists in the system");
+                        SSNTextField.setText("");
+                }
+
+                Statement stmt2=con.createStatement();
+                ResultSet rs2 = stmt2.executeQuery("select max(card_ID) from dbfinal.borrowers;");
+
+                Statement stmt3=con.createStatement();
+                
+                
+                
+                String queryString = "";
+                 queryString = String.format("INSERT INTO dbfinal.borrowers(SSN, First_Name, Last_Name, Address) values('%s', '%s', '%s', '%s');",ssn,fName,lName,address);
+                System.out.println("Borrower Query created");
+                stmt3.executeUpdate(queryString);
+                System.out.println("Borrower Query executed");
+                SSNTextField.setText("");
+                FirstNameTextField.setText("");
+                LastNameTextField.setText("");
+                AddressTextField.setText("");
+
+        }
+        con.close();
+    }
+    catch (Exception e) {
+  System.out.println(e);
+        }
     }//GEN-LAST:event_AddBorrowerButtonActionPerformed
     
     //!!!IMPORTANT!!!
     private void viewfinesbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewfinesbuttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_viewfinesbuttonActionPerformed
+
+    private void CheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckoutButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CheckoutButtonActionPerformed
+
+    private void borrowerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowerIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrowerIDActionPerformed
+
+    private void checkinbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkinbuttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkinbuttonActionPerformed
     
     //!!!IMPORTANT!!!
     private static String queryGeneration(String textfield){
         int counter = 0;
         String query = " ";
+        
+        int count = 0;
+
+        for(int i=0; i < textfield.length(); i++)
+        {    if(textfield.charAt(i) == '\t')
+                count++;
+        }
+        String field1 = "";
+        String field2 = "";
+        
+        if(count == 1) {
+        	int subIndex = textfield.indexOf("\t");
+        	field1 = textfield.substring(0,subIndex);
+        }
+        else if(count == 2) {
+        	int subIndex = textfield.indexOf("\t");
+        	field1 = textfield.substring(0,subIndex);
+        	field2 = textfield.substring(subIndex);
+        }
+        
     	List<Pattern> patterns = new ArrayList<>();
         
         //only isbn
@@ -288,10 +471,10 @@ public class MainGUI extends javax.swing.JFrame {
 
         //isbn and title/author
         patterns.add(Pattern.compile("^(\\d{10}|\\d{13})\\t.+$"));
-        patterns.add(Pattern.compile("^\\t.+(\\d{10}|\\d{13})$"));
+        patterns.add(Pattern.compile("^.+\\t(\\d{10}|\\d{13})$"));
 
         //title and author
-        patterns.add(Pattern.compile("^\\t.+\\t.+$"));
+        patterns.add(Pattern.compile(".+\\t.+$"));
 
         for(Pattern pattern : patterns) {
 			if(pattern.matcher(textfield).matches()) {
@@ -303,6 +486,12 @@ public class MainGUI extends javax.swing.JFrame {
 				}
 				//only title or author
 				if(counter == 1) {
+					System.out.println("In author only");
+					query = String.format("SELECT book.ISBN, Title, Name AS Author, Availability From dbfinal.book, dbfinal.book_authors AS A, dbfinal.authors AS B " + 
+							"WHERE book.Title LIKE '%%%s%%' AND A.author_ID = B.author_ID " + 
+							" AND book.ISBN = A.ISBN;",textfield);
+					System.out.println("Query created");
+					return query;
 					
 				}
 				//isbn and title and author
@@ -315,7 +504,9 @@ public class MainGUI extends javax.swing.JFrame {
 				}
 		        //title and author
 				if(counter == 7) {
-					
+					query = String.format("SELECT book.ISBN, Title, name AS Author, Availability From SQL_Library.book, SQL_Library.book_authors AS A, "
+							+ "SQL_Library.authors AS B WHERE  name LIKE '%%%s%%' AND Title LIKE '%%%s%%'" + 
+							"    AND book.ISBN = A.ISBN;",textfield,textfield);
 				}
 			}
 			counter++;
@@ -360,21 +551,25 @@ public class MainGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBorrowerButton;
     private javax.swing.JTextField AddressTextField;
+    private javax.swing.JButton CheckoutButton;
     private javax.swing.JTextField FirstNameTextField;
     private javax.swing.JTextField LastNameTextField;
     private javax.swing.JTextField SSNTextField;
     private javax.swing.JButton SearchButton;
     private javax.swing.JTextField SearchField;
+    private javax.swing.JTextField borrowerID;
     private javax.swing.JPanel borrowertab;
+    private javax.swing.JButton checkinbutton;
+    private javax.swing.JTextField checkingborrowernumber;
+    private javax.swing.JTextField checkinisbn;
+    private javax.swing.JPanel checkouttab;
     private javax.swing.JPanel finestab;
+    private javax.swing.JTextField isbncheckout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel lookuptab;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JButton viewfinesbutton;
     // End of variables declaration//GEN-END:variables
 }
