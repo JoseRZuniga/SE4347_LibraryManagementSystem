@@ -27,8 +27,8 @@ AND book.ISBN = A.ISBN;
 SELECT book.ISBN, Title, name AS Author, Availability
 From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
 WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
-  AND Title = 'Prize Stories 1987: The O. Henry Awards'
-  AND name = 'William Abrahams';
+  AND Title LIKE '%Prize Stories 1987: The O. Henry Awards%'
+  AND name LIKE '%William Abrahams%';
 
 
   ## If user inputs ISBN and Title
@@ -36,7 +36,7 @@ WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
     AND A.author_ID = B.author_ID
-    AND Title = 'Prize Stories 1987: The O. Henry Awards'
+    AND Title LIKE '%Prize Stories 1987: The O. Henry Awards%'
   ;
 
 
@@ -44,14 +44,14 @@ WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
   SELECT book.ISBN, Title, name AS Author, Availability
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE book.ISBN = '0385235941' AND A.ISBN = '0385235941'
-    AND name = 'William Abrahams'
+    AND name LIKE '%William Abrahams%'
   ;
 
   ## If user inputs Title and Author
   SELECT book.ISBN, Title, name AS Author, Availability
   From SQL_Library.book, SQL_Library.book_authors AS A, SQL_Library.authors AS B
   WHERE  name LIKE '%William Abrahams%'
-  	AND Title = 'Prize Stories 1987: The O. Henry Awards'
+  	AND Title LIKE '%Prize Stories 1987: The O. Henry Awards%'
     AND book.ISBN = A.ISBN;
 
 
